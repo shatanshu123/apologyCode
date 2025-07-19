@@ -1,11 +1,12 @@
-# Use Eclipse Temurin (Java 17) base image
-FROM eclipse-temurin:17-jdk-alpine
-
-# Set work directory
+# Use official Maven image to build the app
+FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Copy built jar from local target directory into the container
-COPY target/*.jar app.jar
-
-# Run the jar file
+# Use OpenJDK image to run the app
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
