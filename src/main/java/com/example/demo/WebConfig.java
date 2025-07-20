@@ -14,8 +14,8 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://687c392d8045b448c3b57735--pleasesorryforgive.netlify.app/") // <-- Netlify site
-                        .allowedMethods("*")
+                        .allowedOrigins("pleasesorryforgive.netlify.app") // <-- Netlify site
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
             }
         };
